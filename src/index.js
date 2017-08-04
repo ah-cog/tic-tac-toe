@@ -106,16 +106,17 @@ class Game extends React.Component {
 	
 	// history.map returns a list... in this case, it returns a list of functions... components? yes, components.
 	// specifically, it returns a list of list items... links specifically.
+	// TODO: What is 'step'?
 	const moves = history.map((step, move) => {
 	  // in the list print either "Move #{move}" or "Game start" (the default option shown at the top of the list)
 	  const desc = move ?
-		'Move #' + move :
+		'Move #' + move	:
 		'Game start';
 	
 	  // Question: Can state be returned in this component? How is that represented?
 	  return (
 		<li key={move}>
-		  <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+		  <a href="#" style={{fontWeight: move === this.state.stepNumber ? 'bold' : 'normal'}} onClick={() => this.jumpTo(move)}>{desc}</a>
 		</li>
 	  );
 	});
