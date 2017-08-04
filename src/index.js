@@ -31,6 +31,7 @@ class Board extends React.Component {
   }
 
   render() {
+
 	// 0 = 3*(j-1) + (i-1) => 0 + 0 = 0
 	// 1 =                 => 0 + 1 = 1
     // 2 =                 => 0 + 2 = 2
@@ -40,25 +41,32 @@ class Board extends React.Component {
 	// 6 =
 	// 7 =
 	// 8 =
+	
+	//const rows = 3;
+	//const cols = 3;
+	//for (let i = 0; i < rows; i++) {
+		//for (let j = 0; j < cols; j++) {
+		//}
+	//}
+	
+	// Reference: https://jsfiddle.net/mrlew/cLbyyL27/
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(1,1)} 
-          {this.renderSquare(2,1)} 
-          {this.renderSquare(3,1)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(1,2)} 
-          {this.renderSquare(2,2)}
-          {this.renderSquare(3,2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(1,3)}
-          {this.renderSquare(2,3)}
-          {this.renderSquare(3,3)}
-        </div>
+	    {
+		  [1,2,3].map((row) => {
+			return (
+				<div key={row} className="board-row">
+				{
+					[1,2,3].map((col) => {
+						return this.renderSquare(col,row)
+					})
+				}
+				</div>
+			)
+		  })
+		}
       </div>
-    );
+    )
   }
 }
 
