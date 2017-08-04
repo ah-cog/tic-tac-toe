@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 // TODO: Add basic AI to play tic-tac-toe
+// TODO: Add prediction to choose next-best move based on experience
 // TODO: Extend to make Checkers
 // TODO: Extend to make Go
 // TODO: Extend ot make Chess
+// TODO: Add real-time sync
 
 // this replaces the above equivalent class since it contains only a render function!
 function Square(props) {
@@ -18,32 +20,42 @@ function Square(props) {
 
 class Board extends React.Component {
   
-  renderSquare(i) {
+  renderSquare(i,j) {
+	const index = (3*(j-1)+(i-1));
     return (
 	  <Square 
-		value={this.props.squares[i]}
-		onClick={() => this.props.onClick(i)}
+		value={this.props.squares[index]}
+		onClick={() => this.props.onClick(index)}
 	  />
 	);
   }
 
   render() {
+	// 0 = 3*(j-1) + (i-1) => 0 + 0 = 0
+	// 1 =                 => 0 + 1 = 1
+    // 2 =                 => 0 + 2 = 2
+	// 3 =                 => 3 + 0 = 3
+	// 4 =
+	// 5 =
+	// 6 =
+	// 7 =
+	// 8 =
     return (
       <div>
         <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
+          {this.renderSquare(1,1)} 
+          {this.renderSquare(2,1)} 
+          {this.renderSquare(3,1)}
         </div>
         <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
+          {this.renderSquare(1,2)} 
+          {this.renderSquare(2,2)}
+          {this.renderSquare(3,2)}
         </div>
         <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
+          {this.renderSquare(1,3)}
+          {this.renderSquare(2,3)}
+          {this.renderSquare(3,3)}
         </div>
       </div>
     );
