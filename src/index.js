@@ -79,6 +79,7 @@ class Game extends React.Component {
 	  }],
 	  stepNumber: 0,
 	  xIsNext: true,
+	  reverseMoveList: true,
 	};
   }
 
@@ -145,8 +146,11 @@ class Game extends React.Component {
 		  />
         </div>
         <div className="game-info">
+		  <button onClick={() => this.state.reverseMoveList = !this.state.reverseMoveList}>
+		    Reverse
+		  </button>
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <ol>{ this.state.reverseMoveList ? moves.reverse() : moves }</ol>
         </div>
       </div>
     );
