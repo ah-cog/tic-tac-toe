@@ -146,9 +146,7 @@ class Game extends React.Component {
 		  />
         </div>
         <div className="game-info">
-		  <button onClick={() => this.state.reverseMoveList = !this.state.reverseMoveList}>
-		    Reverse
-		  </button>
+		  <button onClick={() => this.setState({ reverseMoveList: !this.state.reverseMoveList})}>Reverse</button>
           <div>{status}</div>
           <ol>{ this.state.reverseMoveList ? moves.reverse() : moves }</ol>
         </div>
