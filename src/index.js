@@ -11,8 +11,9 @@ import './index.css';
 
 // this replaces the above equivalent class since it contains only a render function!
 function Square(props) {
+  console.log(props.winnerSquare);
   return (
-	<button className="square" onClick={props.onClick}>
+	<button className="square" onClick={props.onClick} style={{ backgroundColor: props.winnerSquare ? 'green' : 'white' }}>
 	  {props.value}
 	</button>
   );
@@ -22,9 +23,12 @@ class Board extends React.Component {
   
   renderSquare(i,j) {
 	const index = (3*(j-1)+(i-1));
+	const winnerPosition = this.props.winnerPosition;
+	const winnerSquare = winnerPosition && winnerPosition.indexOf(index) >= 0; // true or false
     return (
 	  <Square 
 		value={this.props.squares[index]}
+		winnerSquare={ winnerSquare }
 		onClick={() => this.props.onClick(index)}
 	  />
 	);
@@ -79,6 +83,7 @@ class Game extends React.Component {
 	  }],
 	  stepNumber: 0,
 	  xIsNext: true,
+	  winnerPosition: null,
 	  reverseMoveList: true,
 	};
   }
@@ -112,6 +117,7 @@ class Game extends React.Component {
 	const history = this.state.history.slice(0, this.state.stepNumber + 1);
 	const current = history[this.state.stepNumber]; // history[history.length - 1];
 	const winner = calculateWinner(current.squares);
+	const winnerPosition = calculateWinnerPosition(current.squares);
 	
 	// history.map returns a list... in this case, it returns a list of functions... components? yes, components.
 	// specifically, it returns a list of list items... links specifically.
@@ -142,6 +148,7 @@ class Game extends React.Component {
         <div className="game-board">
           <Board 
 		    squares={current.squares} 
+			winnerPosition={winnerPosition}
 		    onClick={(i) => this.handleClick(i)} 
 		  />
         </div>
@@ -177,6 +184,26 @@ function calculateWinner(squares) {
 	const [a, b, c] = lines[i];
 	if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
 	  return squares[a];
+	}
+  };
+  return null;
+};
+
+function calculateWinnerPosition(squares) {
+  const lines = [
+	[0, 1, 2],
+	[3, 4, 5],
+	[6, 7, 8],
+	[0, 3, 6],
+	[1, 4, 7],
+	[2, 5, 8],
+	[0, 4, 8],
+	[2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+	const [a, b, c] = lines[i];
+	if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+	  return lines[i].slice();
 	}
   };
   return null;
